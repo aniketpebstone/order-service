@@ -1,0 +1,12 @@
+[
+		{
+			"user_name": "scott",
+			"password": "scott",
+			"wallet_balance": 1000000
+		},
+		{
+			"user_name": "tiger",
+			"password": "tiger",
+			"wallet_balance": 20000
+		}
+]
