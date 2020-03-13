@@ -1,12 +1,9 @@
 package no.tusla.orderservice;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;

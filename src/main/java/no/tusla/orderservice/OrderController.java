@@ -45,6 +45,7 @@ public class OrderController {
 			@RequestHeader(value = "access-token", required = true) String token,
 			@Valid @RequestBody MobileSupplyDto dto){
 			log.info("~ In placeSupplyOrderForMobile ~");
+			log.info("MobileSupplyDto:{}",dto);
 			User user=userService.authenticate(userName,token);
 			supplyService.placeSupplyOrder(dto,user);
 			return ResponseEntity.accepted().build();

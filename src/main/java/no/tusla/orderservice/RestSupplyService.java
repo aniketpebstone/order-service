@@ -1,6 +1,7 @@
 package no.tusla.orderservice;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,15 +18,6 @@ public class RestSupplyService
 	public Mobile checkDeliveryForMobile(String company,String model) {
 		log.info("~ In checkDeliveryForMobile ~");		
 		final String uri = "http://localhost:8081/supply/"+company+"/"+model;
-		//Temporary hardcode the response.
-//		Mobile mobile=new Mobile();
-//		mobile.setCompany(company);
-//		mobile.setModel(model);
-//		mobile.setOperatingSystem("Android 10");
-//		mobile.setPrice(11200);
-//		mobile.setRamInGb(2);
-//		mobile.setBatteryCapacityInMilliAmp(3000);
-		
 		ResponseEntity<Mobile> mobileResp=restTemplate.getForEntity(uri, Mobile.class);
 		log.info("Response from supply service:{}",mobileResp);
 		return mobileResp.getBody();
@@ -33,7 +25,7 @@ public class RestSupplyService
 	
 	public void placeSupplyOrder(MobileSupplyDto dto,User user) {
 		log.info("~ In placeSupplyOrder ~");		
-		log.info("MobileSupplyDto:{}",dto);
+		log.info("MobileSupplyDto:{} User{}",dto,user);
 		Mobile mobile = checkDeliveryForMobile(dto.getCompany(), dto.getModel());
 		log.info("Mobile:{}",mobile);
 		if(mobile==null)
@@ -43,6 +35,9 @@ public class RestSupplyService
 		if(userPayingAmt> user.getWalletBalance())
 			throw new RuntimeException("Insufficient amount in wallet!");		
 		log.info("user:{}",user);
+		final String uri = "http://localhost:8081/supply";
+		ResponseEntity<String> mobileResp=restTemplate.postForEntity(uri,dto, String.class);
+		log.info("Response from supply service:{}",mobileResp);
 		
 	}
 
